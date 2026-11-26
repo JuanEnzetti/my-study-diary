@@ -37,7 +37,6 @@ Sin Google Fonts: serían una dependencia externa y fallarían sin internet.
 Comprobar siempre en `app.js` antes de fiarse de la documentación.
 - Para probar horas concretas (00:30, cambio de hora) en Node: sustituir `Date` por una
 subclase cuyo `new Date()` sin argumentos devuelva esa hora, con `TZ=Europe/Madrid`.
-- Ojo: un `display` en CSS anula el atributo `hidden` (lo usa `#aviso-record`).
 - Probar la interfaz con el MCP `chrome-devtools` (`.mcp.json`): `cmd /c npx` por Windows,
 `--isolated` (perfil temporal), sin telemetría ni CrUX. Cada llamada necesita `pageId`.
 Si sale "Rejected", el usuario debe pasarlo de `disabledMcpjsonServers` a
@@ -48,3 +47,5 @@ Si sale "Rejected", el usuario debe pasarlo de `disabledMcpjsonServers` a
 `coordinator`). Falta que el usuario pruebe móvil físico, lector de pantalla y, en la 003,
 cerrar y reabrir el navegador.
 - Arreglar aparte: con la página abierta de domingo a lunes, el formulario sigue en domingo.
+- Publicado en github.com/JuanEnzetti/my-study-diary (2026-11-26). Commits con el correo
+noreply de GitHub. Vercel: solo la web (`.vercelignore`), con cabeceras en `vercel.json`.
