@@ -41,11 +41,11 @@ subclase cuyo `new Date()` sin argumentos devuelva esa hora, con `TZ=Europe/Madr
 `--isolated` (perfil temporal), sin telemetría ni CrUX. Cada llamada necesita `pageId`.
 Si sale "Rejected", el usuario debe pasarlo de `disabledMcpjsonServers` a
 `enabledMcpjsonServers` en `.claude/settings.local.json` (es su permiso, no de Claude).
-- Al rellenar la fecha con el MCP, usar el nodo `Date "Fecha"`, no la etiqueta.
 ## Próximos pasos
 - Specs 001, 002-data-safety y 003-weekly-goal implementadas (003 el 2026-11-26, con el agente
 `coordinator`). Falta que el usuario pruebe móvil físico, lector de pantalla y, en la 003,
 cerrar y reabrir el navegador.
 - Arreglar aparte: con la página abierta de domingo a lunes, el formulario sigue en domingo.
-- Publicado en github.com/JuanEnzetti/my-study-diary (2026-11-26). Commits con el correo
-noreply de GitHub. Vercel: solo la web (`.vercelignore`), con cabeceras en `vercel.json`.
+- Publicado (2026-11-26): github.com/JuanEnzetti/my-study-diary y my-study-diary-iota.vercel.app
+(solo la web, por `.vercelignore`; cabeceras en `vercel.json`). Commits con correo noreply.
+`.env.local` lleva un token de Vercel: nunca subirlo. Desplegar: `npx vercel deploy --prod`.
