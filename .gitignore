@@ -1,0 +1,18 @@
+# Ajustes locales de Claude Code (permisos de esta máquina)
+.claude/settings.local.json
+
+# Skills de terceros: su origen está en skills-lock.json
+.claude/skills/frontend-design/
+.claude/skills/web-design-guidelines/
+
+# Vercel
+.vercel/
+
+# Sistema operativo y editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+
+# Borrador antiguo que el usuario pidió eliminar; sustituido por specs/002-data-safety
+specs/002-data-protection/

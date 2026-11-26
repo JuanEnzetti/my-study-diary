@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diario de Estudio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- La página imita una hoja de cuaderno de cuadros, con su margen rojo a la izquierda -->
+  <main class="hoja">
+    <h1>Diario de Estudio</h1>
+
+    <!-- Aviso: solo aparece si hay datos guardados que no se han podido leer -->
+    <section id="data-notice" class="data-notice" aria-label="Aviso sobre tus datos" hidden>
+      <p id="data-notice-text" role="alert"></p>
+      <ul id="data-notice-items"></ul>
+      <p id="data-notice-status" role="status"></p>
+    </section>
+
+    <!-- Racha actual: lo más importante de la página -->
+    <section class="racha">
+      <p class="racha-numero"><span id="racha-dias">0</span><span class="racha-fuego" aria-hidden="true">🔥</span></p>
+      <p id="racha-texto" class="racha-texto">días seguidos estudiando</p>
+      <p id="aviso-record" class="racha-record" hidden>¡Nuevo récord!</p>
+      <p id="mejor-racha-texto" class="racha-mejor">Mejor racha: 0 días</p>
+    </section>
+
+    <!-- Resumen: minutos de esta semana (lunes a domingo) y días estudiados este mes -->
+    <section class="resumen">
+      <div class="resumen-dato" role="status">
+        <p class="resumen-etiqueta">Esta semana</p>
+        <p id="minutos-semana" class="resumen-valor">0 min</p>
+        <!-- La barra se oculta a los lectores de pantalla: el texto ya dice lo mismo -->
+        <div id="weekly-goal-bar" class="weekly-goal-bar" aria-hidden="true" hidden>
+          <div id="weekly-goal-fill" class="weekly-goal-fill"></div>
+        </div>
+        <p id="weekly-goal-achieved" class="weekly-goal-achieved" hidden>¡Objetivo cumplido!</p>
+      </div>
+      <div class="resumen-dato">
+        <p class="resumen-etiqueta">Este mes</p>
+        <p id="dias-mes" class="resumen-valor">0 días</p>
+      </div>
+    </section>
+
+    <!-- Objetivo semanal: aviso, campo y error -->
+    <section class="bloque">
+      <p id="weekly-goal-notice" class="weekly-goal-notice" role="alert"></p>
+      <form id="weekly-goal-form" class="weekly-goal-form">
+        <div class="campo">
+          <label for="weekly-goal-input">Objetivo semanal (minutos)</label>
+          <input type="text" id="weekly-goal-input" inputmode="numeric" autocomplete="off">
+        </div>
+        <button type="submit">Guardar objetivo</button>
+      </form>
+      <div id="weekly-goal-error" class="weekly-goal-error" role="alert"></div>
+    </section>
+
+    <!-- Mapa de calor: los días, el detalle y la leyenda los pinta heat-map-view.js -->
+    <section class="bloque">
+      <h2 id="heat-map-title">Últimas 12 semanas</h2>
+      <div id="heat-map" class="heat-map" role="group" aria-labelledby="heat-map-title"></div>
+      <p id="heat-map-detail" class="heat-map-detail"></p>
+      <ul id="heat-map-legend" class="heat-map-legend" aria-label="Minutos por día"></ul>
+    </section>
+
+    <!-- Formulario para registrar una sesión -->
+    <section class="bloque">
+      <h2>Nueva sesión</h2>
+      <form id="formulario" class="formulario">
+        <div class="campo campo-tema">
+          <label for="tema">Tema</label>
+          <input type="text" id="tema" placeholder="Ej: Fracciones" required>
+        </div>
+
+        <div class="campo">
+          <label for="fecha">Fecha</label>
+          <input type="date" id="fecha" required>
+        </div>
+
+        <div class="campo">
+          <label for="minutos">Minutos</label>
+          <input type="number" id="minutos" min="1" step="1" placeholder="Ej: 30" required>
+        </div>
+
+        <button type="submit">Guardar sesión</button>
+        <p id="save-error" class="save-error" role="alert"></p>
+      </form>
+    </section>
+
+    <!-- Lista de sesiones -->
+    <section class="bloque">
+      <h2>Mis sesiones</h2>
+      <p id="sin-sesiones" class="vacio">Aún no hay sesiones. Apunta la primera en el formulario de arriba.</p>
+      <ul id="lista-sesiones" class="lista"></ul>
+    </section>
+  </main>
+
+  <script src="session-data.js"></script>
+  <script src="heat-map.js"></script>
+  <script src="heat-map-view.js"></script>
+  <script src="weekly-goal.js"></script>
+  <script src="weekly-goal-view.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

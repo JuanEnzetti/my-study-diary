@@ -1,0 +1,457 @@
+/* ===== Diario de Estudio: una hoja de cuaderno de cuadros =====
+   Idea del diseño: papel cuadriculado, tinta de bolígrafo azul, margen rojo
+   y rotulador fluorescente solo para el récord. Lo único grande es la racha. */
+
+:root {
+  --papel: #fbfcfe;        /* hoja blanca, un poco fría */
+  --cuadricula: #e3eaf4;   /* cuadros del cuaderno */
+  --linea: #c9d3e1;        /* renglones y bordes */
+  --tinta: #1f3a93;        /* bolígrafo azul */
+  --tinta-oscura: #162c73;
+  --grafito: #23262e;      /* texto principal */
+  --lapiz: #5f6676;        /* texto secundario */
+  --margen: #e5484d;       /* línea roja del margen */
+  --fluor: #ffe45c;        /* rotulador fluorescente */
+
+  --letra-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --letra-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--letra-sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--grafito);
+  background-color: var(--papel);
+  /* Cuadrícula de 24 px dibujada con dos degradados: uno horizontal y otro vertical */
+  background-image:
+    linear-gradient(var(--cuadricula) 1px, transparent 1px),
+    linear-gradient(90deg, var(--cuadricula) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ===== La hoja con su margen rojo ===== */
+.hoja {
+  max-width: 600px;
+  min-height: 100vh; /* el margen rojo llega hasta abajo de la pantalla */
+  margin: 0 auto 0 16px;
+  padding: 32px 16px 64px 24px;
+  border-left: 2px solid var(--margen);
+}
+
+@media (min-width: 680px) {
+  .hoja {
+    margin: 0 auto;
+    padding: 48px 32px 80px 40px;
+  }
+}
+
+h1,
+h2 {
+  font-family: var(--letra-serif);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+}
+
+h1 {
+  font-size: 2rem;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-size: 1.375rem;
+  margin-bottom: 16px;
+}
+
+/* ===== Aviso de datos y error al guardar ===== */
+.data-notice {
+  margin-top: 24px;
+  padding: 12px 16px;
+  background: #ffffff;
+  border: 2px solid var(--margen);
+  border-radius: 6px;
+}
+
+.data-notice p {
+  margin: 0;
+}
+
+.data-notice ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.data-notice textarea {
+  font: inherit;
+  width: 100%;
+  min-height: 6rem;
+  margin-top: 8px;
+}
+
+.save-error {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-weight: 600;
+  color: #b3261e;
+}
+
+/* Vacío no ocupa sitio en el formulario */
+.save-error:empty {
+  display: none;
+}
+
+/* ===== Racha: el protagonista ===== */
+.racha {
+  margin: 32px 0 40px;
+}
+
+.racha-numero {
+  margin: 0;
+  font-family: var(--letra-serif);
+  font-size: clamp(6rem, 30vw, 9rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--tinta);
+}
+
+.racha-fuego {
+  font-size: 0.4em;
+  vertical-align: top;
+  margin-left: 0.1em;
+  letter-spacing: 0;
+}
+
+.racha-texto {
+  margin: 8px 0 0;
+  font-size: 1.125rem;
+}
+
+/* El récord se marca como con un rotulador fluorescente */
+.racha-record {
+  width: fit-content;
+  margin: 12px 0 0;
+  padding: 0 4px;
+  font-weight: 700;
+  background: linear-gradient(transparent 40%, var(--fluor) 40%, var(--fluor) 92%, transparent 92%);
+}
+
+.racha-mejor {
+  margin: 12px 0 0;
+  font-size: 0.9375rem;
+  color: var(--lapiz);
+}
+
+/* ===== Resumen: semana y mes ===== */
+.resumen {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.resumen-dato {
+  border-top: 2px solid var(--tinta);
+  padding-top: 8px;
+}
+
+.resumen-etiqueta {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--lapiz);
+}
+
+.resumen-valor {
+  margin: 0;
+  font-family: var(--letra-serif);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--tinta);
+  overflow-wrap: anywhere; /* un total con muchos decimales no se sale */
+}
+
+/* ===== Objetivo semanal ===== */
+/* Sin "display" en la barra y el mensaje: anularía su atributo hidden */
+.weekly-goal-bar {
+  height: 14px;
+  margin-top: 4px;
+  background: #ffffff;
+  border: 1px solid var(--lapiz);
+}
+
+.weekly-goal-fill {
+  width: 0;
+  height: 100%;
+  background: var(--tinta);
+}
+
+.weekly-goal-achieved {
+  margin: 8px 0 0;
+  font-weight: 600;
+}
+
+.weekly-goal-form {
+  display: grid;
+  gap: 16px;
+}
+
+.weekly-goal-form input:focus {
+  outline: 3px solid var(--tinta);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+/* Vacíos no ocupan sitio, pero siguen en la página para que se anuncien sus textos */
+.weekly-goal-notice {
+  margin: 0;
+  font-weight: 600;
+}
+
+.weekly-goal-notice:not(:empty) {
+  margin-bottom: 16px;
+}
+
+.weekly-goal-error p {
+  margin: 16px 0 0;
+  font-weight: 600;
+  color: #b3261e;
+}
+
+/* ===== Mapa de calor ===== */
+.heat-map {
+  display: grid;
+  /* Una columna para los rótulos y doce para las semanas */
+  grid-template-columns: 16px repeat(12, minmax(0, 1fr));
+  gap: 3px;
+  max-width: 400px;
+}
+
+.heat-map-label {
+  font-size: 0.75rem;
+  line-height: 1;
+  color: var(--lapiz);
+  align-self: center;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.heat-map-day {
+  position: relative;
+  aspect-ratio: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border-radius: 3px;
+}
+
+.heat-map-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
+
+/* En alto contraste se conservan los colores: son la información */
+.heat-map-day,
+.heat-map-swatch {
+  forced-color-adjust: none;
+}
+
+.heat-map-day.level-0,
+.heat-map-swatch.level-0 {
+  background: #ffffff;
+  border: 1px solid var(--linea); /* claro: un día vacío no debe destacar más que el nivel 1 */
+}
+
+.heat-map-day.level-1,
+.heat-map-swatch.level-1 {
+  background: #c3d0f0;
+}
+
+.heat-map-day.level-2,
+.heat-map-swatch.level-2 {
+  background: #8da3dc;
+}
+
+.heat-map-day.level-3,
+.heat-map-swatch.level-3 {
+  background: #5470bf;
+}
+
+.heat-map-day.level-4,
+.heat-map-swatch.level-4 {
+  background: var(--tinta);
+}
+
+/* Hoy: borde separado del día, para que se vea también sobre la tinta */
+.heat-map-day.is-today {
+  outline: 2px solid var(--grafito);
+  outline-offset: 1px;
+}
+
+/* Elegido: punto blanco con contorno, visible en todos los niveles */
+.heat-map-day[aria-pressed="true"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 8px;
+  height: 8px;
+  margin: auto;
+  border: 2px solid var(--grafito);
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+/* Foco: anillo interior, para no tapar el borde de hoy */
+.heat-map-day:focus-visible:not(.is-today) {
+  outline: none;
+}
+
+.heat-map-day:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--grafito), inset 0 0 0 4px #ffffff;
+}
+
+.heat-map-detail {
+  min-height: 1.5em; /* reserva el sitio para que la página no salte */
+  margin: 12px 0;
+}
+
+.heat-map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+  color: var(--lapiz);
+}
+
+.heat-map-legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ===== Bloques: formulario y lista ===== */
+.bloque {
+  margin-bottom: 48px;
+}
+
+/* ===== Formulario ===== */
+.formulario {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* El tema y el botón ocupan todo el ancho; fecha y minutos van uno al lado del otro */
+.campo-tema,
+.formulario button {
+  grid-column: 1 / -1;
+}
+
+label {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  margin-bottom: 6px;
+}
+
+input {
+  font: inherit;
+  color: var(--grafito);
+  width: 100%;
+  min-width: 0;
+  min-height: 3.125rem; /* misma altura para todos; el campo de fecha es algo más alto */
+  padding: 10px 12px;
+  background: #ffffff;
+  border: 1px solid var(--linea);
+  border-bottom: 2px solid var(--tinta);
+  border-radius: 4px 4px 0 0;
+}
+
+input::placeholder {
+  color: var(--lapiz);
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--tinta);
+  box-shadow: 0 0 0 3px rgba(31, 58, 147, 0.18);
+}
+
+button {
+  font: inherit;
+  font-weight: 700;
+  margin-top: 8px;
+  padding: 14px;
+  border: none;
+  border-radius: 6px;
+  background: var(--tinta);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--tinta-oscura);
+}
+
+button:focus-visible {
+  outline: 3px solid var(--tinta);
+  outline-offset: 3px;
+}
+
+/* ===== Lista de sesiones: como renglones del cuaderno ===== */
+.lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--linea);
+}
+
+.sesion {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--linea);
+  background: var(--papel);
+}
+
+.sesion-tema {
+  font-weight: 600;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.sesion-fecha {
+  font-size: 0.875rem;
+  color: var(--lapiz);
+  margin: 0;
+}
+
+.sesion-minutos {
+  flex-shrink: 0;
+  font-family: var(--letra-serif);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--tinta);
+}
+
+.vacio {
+  margin: 0;
+  color: var(--lapiz);
+}

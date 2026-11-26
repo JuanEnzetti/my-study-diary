@@ -1,0 +1,11 @@
+# En Vercel solo se publica la web; la documentación, los tests y la configuración no.
+/*
+!index.html
+!styles.css
+!app.js
+!session-data.js
+!heat-map.js
+!heat-map-view.js
+!weekly-goal.js
+!weekly-goal-view.js
+!vercel.json
