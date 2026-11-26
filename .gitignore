@@ -16,3 +16,6 @@ desktop.ini
 
 # Borrador antiguo que el usuario pidió eliminar; sustituido por specs/002-data-safety
 specs/002-data-protection/
+
+.vercel
+.env*
